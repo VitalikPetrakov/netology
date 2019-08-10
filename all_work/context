@@ -1,0 +1,23 @@
+from datetime import datetime
+
+
+class TimeManager:
+
+    def __init__(self):
+        pass
+
+    def __enter__(self):
+        self.time_in = datetime.now()
+        return self.time_in
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.time_out = datetime.now()
+        self.delta = self.time_out - self.time_in
+        print(self.time_in.strftime("%Y-%m-%d-%H.%M.%S"))
+        print(self.time_out.strftime("%Y-%m-%d-%H.%M.%S"))
+        print(self.delta)
+
+
+with TimeManager() as a:
+    for i in range(1000):
+        print(i ** i)
