@@ -13,6 +13,7 @@ def log_with_path(path):
         return new_func
     return logger
 
+
 @log_with_path('log1.txt')
 def read_file():
     with open('countries.json', 'rt', encoding='utf8') as file:
