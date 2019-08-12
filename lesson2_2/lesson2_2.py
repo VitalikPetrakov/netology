@@ -1,3 +1,4 @@
+                     
 """ TODO
 Написать класс итератора, который по каждой стране из файла countries.json ищет страницу из википедии.
 Записывает в файл пару: страна – ссылка.
@@ -22,12 +23,9 @@ def get_name_of_country(data_in_file):
 
 
 def file_writer(path):
-    counter = 0
     with open(path, 'w', encoding='utf8') as file:
         for name in get_name_of_country(read_file()):
             file.write(f'{name} - https://en.wikipedia.org/wiki/{name.replace(" ", "_")}\n')
-            counter += 1
-    return counter
 
 
 def get_hash(path):
@@ -40,5 +38,6 @@ def get_hash(path):
 if __name__ == '__main__':
     path_of_file = 'list_of_url.txt'
     file_writer(path_of_file)
-    for i in range(file_writer(path_of_file)):
-        print(next(get_hash(path_of_file)))
+    for i in get_hash(path_of_file):
+        print(i)
+
