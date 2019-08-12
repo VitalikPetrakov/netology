@@ -9,7 +9,7 @@ from datetime import datetime
 
 def logger(old_func):
     def new_func(*args, **kwargs):
-        with open('log.txt', 'a', encoding='utf8') as file:
+        with open('log3.txt', 'a', encoding='utf8') as file:
             result = old_func(*args, **kwargs)
             file.write(f'{datetime.now()} {old_func.__name__}{str(args)} {str(kwargs)}\n {result}\n')
         return result
