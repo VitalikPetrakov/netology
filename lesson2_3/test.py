@@ -9,7 +9,7 @@ def logger(old_func):
             result = old_func(*args, **kwargs)
             file.write(f'{datetime.now()} {old_func.__name__} !{str(args)} !!{str(kwargs)}\n {result}\n')
         return result
-    return new_func()
+    return new_func
 
 
 @logger
