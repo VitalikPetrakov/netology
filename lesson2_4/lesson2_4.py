@@ -52,8 +52,9 @@ class PhoneBook:
 
     def search_chosen_one(self):
         for contact in self.__contact_list:
-            if contact.get_chosen() is False:
-                self.__contact_list.remove(contact)
+            if contact.get_chosen() is True:
+                print(contact)
+    
 
     def search_by_name_and_surname(self, name, surname):
         for contact in self.__contact_list:
