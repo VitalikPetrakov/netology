@@ -1,3 +1,32 @@
+def adv_print(*args, **kwargs):
+    text = ''
+    count = 0
+    for item in args:
+        text += str(item)
+    start = kwargs.get('start', '')
+    max_line = kwargs.get('max_line', 120)
+    in_file = kwargs.get('in_file')
+    text1 = start
+    if start:
+        text1 += '\n'
+    for i in text.split():
+        count += len(i)
+        if count > max_line:
+            text1 += '\n'
+            count = len(i)
+        elif text1 != '':
+            text1 += ' '
+            count += 1
+        text1 += i
+    if not in_file:
+        print(text1)
+    else:
+        print(text1+'\n')
+        with open(in_file, 'wt') as file:
+            file.write(text1)
+        print(f'{in_file} записан')
+
+
 class Contact:
 
     def __init__(self, name, surname, tel, chosen=False, **kwargs):
@@ -91,3 +120,16 @@ if __name__ == '__main__':
     # my_phonebook.search_chosen_one()
     # my_phonebook.search_by_name_and_surname('Peter1', 'Test1')
     # my_phonebook.search_by_name_and_surname('Peter', 'Test123')
+
+
+### Для третьего задания
+
+    data = 's,dfkjbwedfb;q2gb  fbwskdjgvfo;2qgdwbflbq;kjsdbf kabshdkjfgqu  jlkwvegfmav sdhjfvajsd hfgvajshdgfqiuw efgvashdv fajshdfv' \
+       'skadjfgaqslkjufgdqlkwdfvf   blaksdjgfaliksu  gaefqlkjawsdbvfaks  ljdvbflkjasdgf' \
+       'sjhdgflqkiusdwgf  kjasgbdlkf uagsdflkuasgde fkljwqvgflikuq  wdgfvlqiugdvqouiqgfd   kjfgakjfgaksjd gfalkuwegfajsd  vbfklasdgfa ilusasudgfqkw jegfalkdsugfa8e gfakslfekjg' \
+       'sdjfgqasilufgkaj  sdgfauieguigfkajvb skdu  fgalkjdsfb wudfgha  klsdfhga eilufal asdufhgqil uawlefgakjdf glquwweqgfalksjdgf' \
+       'sdukfgwqlkdg'
+
+    adv_print(data, data, data, in_file='sereg.txt')
+
+
