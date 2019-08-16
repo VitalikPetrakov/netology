@@ -55,7 +55,6 @@ class PhoneBook:
             if contact.get_chosen() is True:
                 print(contact)
     
-
     def search_by_name_and_surname(self, name, surname):
         for contact in self.__contact_list:
             if name == contact.get_name() and surname == contact.get_surname():
