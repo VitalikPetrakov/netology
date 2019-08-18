@@ -17,7 +17,6 @@ def read_file():
 def get_name_of_country(data_in_file):
     for item in data_in_file:
         name_of_country = item.get('name').get('common')
-        name_of_country = name_of_country
         yield name_of_country
 
 
