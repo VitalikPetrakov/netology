@@ -15,6 +15,7 @@ class NameIter:
         self.file_to_write = open('list_of_url.txt', 'w', encoding='utf8')
         self.n = len(self.data)
         self.idx=0
+        self.file_to_read.close()  
 
     def __iter__(self):
         return self
@@ -26,6 +27,7 @@ class NameIter:
                                  f'{self.name_of_country.replace(" ", "_")}\n')
         self.idx+=1
         if self.idx==self.n:
+            self.file_to_write.close()
             raise StopIteration
         return item                        
         
