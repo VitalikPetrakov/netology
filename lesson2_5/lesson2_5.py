@@ -62,11 +62,12 @@ from email.mime.multipart import MIMEMultipart
 
 
 class SendMailer:
-    def __init__(self, login, password):
+    def __init__(self, login, password, header=None):
         self.login = login
         self.password = password
         self.gmail_smtp = "smtp.gmail.com"
         self.gmail_imap = "imap.gmail.com"
+        self.header = header
         self.recipients = []
 
     def add_address_to_list_recipients(self, mail_address):
@@ -90,9 +91,25 @@ class SendMailer:
         mail_send.sendmail(self.login, self.recipients, self.message.as_string())
         mail_send.quit()
 
+    def get_mail(self):
+        mail = imaplib.IMAP4_SSL(self.gmail_imap)
+        mail.login(self.login, self.password)
+        mail.list()
+        mail.select("inbox")
+        criterion = '(HEADER Subject "%s")' % self.header if self.header else 'ALL'
+        result, data = mail.uid('search', None, criterion)
+        assert data[0], 'There are no letters with current header'
+        latest_email_uid = data[0].split()[-1]
+        result, data = mail.uid('fetch', latest_email_uid, '(RFC822)')
+        raw_email = data[0][1]
+        email_message = email.message_from_string(raw_email)
+        print(email_message)
+        mail.logout()
+
 if __name__ == '__main__':
     my_sendmailer = SendMailer('vitalik.petrakov123123@gmail.com', 'Vp65852341')
     my_sendmailer.add_address_to_list_recipients('vitalik.petrakov@mail.ru')
     my_sendmailer.add_address_to_list_recipients('vitalik.petrakov@gmail.com')
     my_sendmailer.make_massage('test massage from python', 'my massage from python=)')
-    my_sendmailer.send_massage()
+    # my_sendmailer.send_massage()
+    my_sendmailer.get_mail()
