@@ -73,14 +73,12 @@ class SendMailer:
     def add_address_to_list_recipients(self, mail_address):
         self.recipients.append(mail_address)
 
-    def make_massage(self, subject, message):
-        self.message = message
-        self.subject = subject
+    def make_massage(self, subject, text):
         self.message = MIMEMultipart()
         self.message['From'] = self.login
         self.message['To'] = ', '.join(self.recipients)
-        self.message['Subject'] = self.subject
-        self.message.attach(MIMEText(message))
+        self.message['Subject'] = subject
+        self.message.attach(MIMEText(text))
 
     def send_massage(self):
         mail_send = smtplib.SMTP(self.gmail_smtp, 587)
