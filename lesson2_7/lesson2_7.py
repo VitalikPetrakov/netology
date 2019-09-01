@@ -1,69 +1,78 @@
-"""
-Ваша задача: починить адресную книгу, используя регулярные выражения.
-Структура данных будет всегда:
-lastname,firstname,surname,organization,position,phone,email
-Предполагается, что телефон и e-mail у человека может быть только один.
-Необходимо:
-
-поместить Фамилию, Имя и Отчество человека в поля lastname, firstname и surname соответственно. В записной книжке
-изначально может быть Ф + ИО, ФИО, а может быть сразу правильно: Ф+И+О;
-привести все телефоны в формат +7(999)999-99-99. Если есть добавочный номер, формат будет такой: +7(999)999-99-99
- доб.9999;
-объединить все дублирующиеся записи о человеке в одну.
-"""
-
-
+import re
 from pprint import pprint
-# читаем адресную книгу в формате CSV в список contacts_list
 import csv
+
+
 with open('phonebook_raw.csv', 'rt', encoding='utf8') as file:
-    rows = csv.reader(file, delimiter=",")
+    rows = csv.reader(file)
     contacts_list = list(rows)
+    headers = contacts_list[0]
     contacts_list = contacts_list[1:]
-# pprint(contacts_list, width=300, depth=2)
-
-# # TODO 1: выполните пункты 1-3 ДЗ
 
 
+def work_with_name_and_tel(contacts_list):
+    my_contact_list = []
+    for contact in contacts_list:
+        fio_str = ' '.join(contact[:2])
+        fio_str = re.sub("[\s]+", " ", fio_str)
+        fio_list = re.split(" ", fio_str)
+        while len(fio_list) < 3:
+            fio_list.append('')
+        pattern_big_tel = re.compile("(\+7|8).*?(\d{3}).*?(\d{3}).*?(\d{2}).*?"
+                                 "(\d{2}).*?(\(|\s|^\s).*?(\w+.).*?(\d+)(\)|$)")
+        pattern_small_tel = re.compile("(\+7|8).*?(\d{3}).*?(\d{3}).*?(\d{2}).*?(\d{2})")
+        if 'доб' in contact[5]:
+            write_tel = pattern_big_tel.sub(r"+7(\2)\3-\4-\5 \7\8", contact[5])
+        else:
+            write_tel = pattern_small_tel.sub(r"+7(\2)\3-\4-\5", contact[5])
+        contact.pop(5)
+        contact.insert(5, write_tel)
+        my_str = fio_list[:3]+contact[3:]
+        my_contact_list.append(my_str)
+    return my_contact_list
 
 
+def del_repeat(contacts_list):
+    n = 0
+    my_dict = {}
+    list_uncopy_contacts = []
+    new_contacts_list = []
+    for contact in contacts_list:
+
+        if contact[0] not in my_dict.keys():
+            my_dict.setdefault(contact[0], list())
+            my_dict[contact[0]].append(n)
+            n += 1
+        else:
+            my_dict[contact[0]].append(n)
+            n += 1
+    for key, item in my_dict.items():
+        if len(item) > 1:
+            resalt = []
+            n = 0
+            for i in contacts_list[item[0]]:
+                if i:
+                    resalt.append(i)
+                    n += 1
+                else:
+                    resalt.append(contacts_list[item[1]][n])
+                    n += 1
+            new_contacts_list.append(resalt)
+        else:
+            for i in item:
+                list_uncopy_contacts.append(i)
+    for i in list_uncopy_contacts:
+        new_contacts_list.append(contacts_list[i])
+    return new_contacts_list
 
 
+if __name__ == '__main__':
+    contacts_list = work_with_name_and_tel(contacts_list)
+    contacts_list = (del_repeat(contacts_list))
+    contacts_list.insert(0, headers)
+    pprint(contacts_list, width=300, depth=2)
+    with open("phonebook.csv", "w") as f:
+        datawriter = csv.writer(f, delimiter=',')
+        datawriter.writerows(contacts_list)
 
 
-# TODO 2: сохраните получившиеся данные в другой файл
-# код для записи файла в формате CSV
-# with open("phonebook.csv", "w") as f:
-#     datawriter = csv.writer(f, delimiter=',')
-#   # Вместо contacts_list подставьте свой список
-#     datawriter.writerows(contacts_list)
-
-
-
-# def rebuild_names(unrebuild_data, index_in_data):
-#     my_contact_list = []
-#     for contact in unrebuild_data:
-#         print(contact)
-#         data = contact[index_in_data].split()
-#         if len(contact[index_in_data].split()) == 1:
-#             pass
-#         elif len(contact[index_in_data].split()) == 2:
-#             contact = contact[2:]
-#             contact.insert(index_in_data, data[0])
-#             # print(contact)
-#             contact.insert(index_in_data + 1, data[1])
-#             # print(contact)
-#         elif len(contact[index_in_data].split()) == 3:
-#             contact = contact[3:]
-#             # print(contact)
-#             contact.insert(index_in_data, data[0])
-#             # print(contact)
-#             contact.insert(index_in_data + 1, data[1])
-#             # print(contact)
-#             contact.insert(index_in_data + 2, data[2])
-#             # print(contact)
-#         my_contact_list.append(contact)
-#     return my_contact_list
-#
-#
-# pprint(rebuild_names(contacts_list, 0), width=300, depth=2)
