@@ -1,7 +1,7 @@
 import unittest
 import json
 import lesson2_6_tests.secretar as programm
-from mock import patch
+from unittest.mock import patch
 
 documents = []
 directories = {}
