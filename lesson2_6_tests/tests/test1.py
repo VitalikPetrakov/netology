@@ -3,6 +3,7 @@ import json
 import lesson2_6_tests.secretar as programm
 from unittest.mock import patch
 
+
 documents = []
 directories = {}
 
@@ -10,10 +11,12 @@ directories = {}
 def setUpModule():
     with open('../fixtures/documents.json', 'r', encoding='utf-8') as out_docs:
         documents.extend(json.load(out_docs))
-        print(documents)
     with open('../fixtures/directories.json', 'r', encoding='utf-8') as out_dirs:
         directories.update(json.load(out_dirs))
-        print(directories)
+
+
+print(documents)
+print(directories)
 
 
 @patch('lesson2_6_tests.fixtures.documents', documents, create=True)
@@ -44,4 +47,5 @@ class TestSecretaryProgram(unittest.TestCase):
 
 
 if __name__ == '__main__':
+    setUpModule()
     unittest.main()
