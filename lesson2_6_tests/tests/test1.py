@@ -43,5 +43,4 @@ class TestSecretaryProgram(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    setUpModule()
     unittest.main()
