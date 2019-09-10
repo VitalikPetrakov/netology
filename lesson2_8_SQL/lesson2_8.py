@@ -48,14 +48,24 @@ def add_students(course_id, students): # создает студентов и
     pass
 
 
-def add_student(student): # просто создает студента
-    pass
+# def add_student(student): # просто создает студента
+def add_student():
+    with psycopg2.connect(dbname='netology', user='netology', password='123') as conn:
+        with conn.cursor() as curs:
+            curs.execute("insert into Student (name, gpa, birth) values ('Петя','5','02.01.2001');")
 
 
-def get_student(student_id):
-    pass
+# def get_student(student_id):
+def get_student():
+    with psycopg2.connect(dbname='netology', user='netology', password='123') as conn:
+        with conn.cursor() as curs:
+            curs.execute("select * from Student;")
+            for row in curs:
+                print(row)
 
 
 if __name__ == '__main__':
-    create_db()
+    # create_db()
     # del_all_tables()
+    add_student()
+    get_student()
