@@ -29,8 +29,8 @@ def del_all_tables():
             curs.execute('DROP TABLE student_course CASCADE;')
 
 
-#course_id
-def get_students(): # возвращает студентов определенного курса
+
+def get_students(course_id):
     with psycopg2.connect(dbname='netology', user='netology', password='123') as conn:
         with conn.cursor() as curs:
             curs.execute('select name from student where student.id = student_course.student_id')
@@ -38,7 +38,7 @@ def get_students(): # возвращает студентов определен
                 print(row)
 
 
-def add_students(course_id, students): # создает студентов и
+def add_students(course_id, students):
     with psycopg2.connect(dbname='netology', user='netology', password='123') as conn:
         with conn.cursor() as curs:
             for student in students:
