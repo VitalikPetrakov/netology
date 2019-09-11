@@ -33,7 +33,7 @@ def del_all_tables():
 def get_students(): # возвращает студентов определенного курса
     with psycopg2.connect(dbname='netology', user='netology', password='123') as conn:
         with conn.cursor() as curs:
-            curs.execute('select * from student')
+            curs.execute('select name from student where student.id = student_course.student_id')
             for row in curs:
                 print(row)
 
