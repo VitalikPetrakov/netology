@@ -15,8 +15,8 @@ def setUpModule():
         directories.update(json.load(out_dirs))
 
 
-@patch('lesson2_6_tests.fixtures.documents', documents, create=True)
-@patch('lesson2_6_tests.fixtures.directories', directories, create=True)
+@patch('programm.documents', documents, create=True)
+@patch('programm.directories', directories, create=True)
 class TestSecretaryProgram(unittest.TestCase):
 
     def setUp(self):
