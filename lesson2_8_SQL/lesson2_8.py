@@ -45,9 +45,9 @@ def add_students(course_id, students):
             for student in students:
                 curs.execute("insert into Student (name, gpa, birth) values (%s, %s, %s)",
                              (student['name'], student['gpa'], student['birth']))
-                curs.execute("""insert into student_course (student_id, course_id) 
-                select student.id from student where student.name = (%s) and values (%s)""",
-                             (student['name'], course_id, )) # не могу понять как правильно составить запрос =(
+                curs.execute("""insert into student_course (student_id, course_id)
+                 select student.id, (%s) from student where student.name = (%s);""",
+                             (course_id, student['name'],))
 
 
 def add_student(student):
@@ -80,8 +80,8 @@ def entry_course(student_id, course_id):
 
 if __name__ == '__main__':
     test = {'name': 'test5', 'gpa': 3, 'birth': '11.09.2019'}
-    test2 = [{'name': 'test2', 'gpa': 3, 'birth': '11.09.2019'},
-             {'name': 'test3', 'gpa': 4, 'birth': '11.09.2019'}]
+    test2 = [{'name': 'test6', 'gpa': 3, 'birth': '11.09.2019'},
+             {'name': 'test7', 'gpa': 4, 'birth': '11.09.2019'}]
     # create_db()
     # del_all_tables()
     # add_student(test)
@@ -89,7 +89,7 @@ if __name__ == '__main__':
     # get_students()
     # add_course('english')
     # entry_course(2, 1)
-    add_students(1, test2)
+    # add_students(2, test2)
     # get_students(2)
 
 
