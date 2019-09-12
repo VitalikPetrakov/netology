@@ -29,11 +29,12 @@ def del_all_tables():
             curs.execute('DROP TABLE student_course CASCADE;')
 
 
-
 def get_students(course_id):
     with psycopg2.connect(dbname='netology', user='netology', password='123') as conn:
         with conn.cursor() as curs:
-            curs.execute('select name from student where student.id = student_course.student_id')
+            curs.execute("""select * from student 
+            join student_course on student.id = student_course.student_id
+            and course_id = (%s);""", (course_id, ))
             for row in curs:
                 print(row)
 
@@ -44,11 +45,11 @@ def add_students(course_id, students):
             for student in students:
                 curs.execute("insert into Student (name, gpa, birth) values (%s, %s, %s)",
                              (student['name'], student['gpa'], student['birth']))
-                student_id = curs.execute("select id from Student where name = (%s)", (student['name'],))
-                for row in curs:
-                    print(row)
-                curs.execute("insert into student_course (student_id, course_id) values (%s, %s)",
-                             (student_id, course_id))
+                # student_id = curs.execute("select id from Student where name = (%s)", (student['name'],))
+                # for row in curs:
+                #     print(row)
+                curs.execute("insert into student_course (student_id, course_id) values (Student(id), %s)",
+                             (course_id, ))
 
 
 def add_student(student):
@@ -90,5 +91,7 @@ if __name__ == '__main__':
     # get_students()
     # add_course('english')
     # entry_course(2, 1)
-    add_students(1, test2)
+    # add_students(1, test2)
+    # get_students(2)
+
 
