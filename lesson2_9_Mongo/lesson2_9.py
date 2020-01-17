@@ -1,6 +1,17 @@
 import csv
 import re
 from pymongo import MongoClient
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, Integer, create_engine
+from sqlalchemy.orm import sessionmaker
+
+
+Base = declarative_base()
+engine = create_engine('poctgresql://localhost/netology')
+Session = sessionmaker(bind=engine)
+
+session = Session()
+
 
 
 def read_data(csv_file, db):

@@ -79,17 +79,17 @@ def entry_course(student_id, course_id):
 
 
 if __name__ == '__main__':
-    test = {'name': 'test5', 'gpa': 3, 'birth': '11.09.2019'}
-    test2 = [{'name': 'test6', 'gpa': 3, 'birth': '11.09.2019'},
-             {'name': 'test7', 'gpa': 4, 'birth': '11.09.2019'}]
+    test = {'name': 'test3', 'gpa': 3, 'birth': '11.09.2019'}
+    test2 = [{'name': 'test1', 'gpa': 3, 'birth': '11.09.2019'},
+             {'name': 'test2', 'gpa': 4, 'birth': '11.09.2019'}]
     # create_db()
     # del_all_tables()
     # add_student(test)
-    # get_student(1)
-    # get_students()
-    # add_course('english')
+    # get_student(3)
+    # get_students(1)
+    # add_course('prog')
     # entry_course(2, 1)
-    # add_students(2, test2)
+    # add_students(1, test2)
     # get_students(2)
 
 
