@@ -1,6 +1,6 @@
 import unittest
 import json
-import lesson2_6_tests.secretar as prog
+import secretar
 from unittest.mock import patch
 
 
@@ -9,9 +9,9 @@ directories = {}
 
 
 def setUpModule():
-    with open('../fixtures/documents.json', 'r', encoding='utf-8') as out_docs:
+    with open('fixtures/documents.json', 'r', encoding='utf-8') as out_docs:
         documents.extend(json.load(out_docs))
-    with open('../fixtures/directories.json', 'r', encoding='utf-8') as out_dirs:
+    with open('fixtures/directories.json', 'r', encoding='utf-8') as out_dirs:
         directories.update(json.load(out_dirs))
 
 
@@ -26,20 +26,20 @@ class TestSecretaryProgram(unittest.TestCase):
         }
 
     def test_get_all_doc_owners_names(self):
-        self.assertIsInstance(prog.get_all_doc_owners_names(), set)
-        self.assertGreater(len(prog.get_all_doc_owners_names()), 0)
+        self.assertIsInstance(secretar.get_all_doc_owners_names(), set)
+        self.assertGreater(len(secretar.get_all_doc_owners_names()), 0)
 
     def test_append_doc_to_shelf(self):
-        prog.append_doc_to_shelf(self.example_set['doc'], self.example_set['shelf'])
+        secretar.append_doc_to_shelf(self.example_set['doc'], self.example_set['shelf'])
         self.assertIn(self.example_set['doc'], directories.get(self.example_set['shelf']))
 
     def test_delete_doc(self):
-        self.assertTrue(prog.check_document_existance("11-2"))
+        self.assertTrue(secretar.check_document_existance("11-2"))
 
         with patch('programm.input', return_value="11-2"):
-            prog.delete_doc()
+            secretar.delete_doc()
 
-        self.assertFalse(prog.check_document_existance("11-2"))
+        self.assertFalse(secretar.check_document_existance("11-2"))
 
 
 if __name__ == '__main__':
