@@ -28,4 +28,4 @@ def translate_it(file_in, file_out, to_lang, in_lang='ru'):
         file_out.write(transl_text + '\n')
 
 
-translate_it('text/DE.txt', 'de1.txt', 'de', 'en')
+translate_it('DE.txt', 'de1.txt', 'de', 'en')
