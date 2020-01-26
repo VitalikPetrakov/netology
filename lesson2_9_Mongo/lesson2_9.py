@@ -17,20 +17,11 @@ def read_data(csv_file, db):
 
 
 def find_cheapest(db):
-    """
-    Отсортировать билеты из базы по возрастания цены
-    Документация: https://docs.mongodb.com/manual/reference/method/cursor.sort/
-    """
     sorted_db = list(db.artist.find().sort('Цена'))
     return sorted_db
 
 
 def find_by_name(name, db):
-    """
-    Найти билеты по имени исполнителя (в том числе – по подстроке),
-    и вернуть их по возрастанию цены
-    """
-
     regex = re.compile('укажите регулярное выражение для поиска. ' \
                        'Обратите внимание, что в строке могут быть специальные символы, их нужно экранировать')
     find_in_db = list(db.artist.find({'Исполнитель': name}).sort('Цена'))
