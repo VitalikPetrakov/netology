@@ -34,5 +34,5 @@ if __name__ == '__main__':
     pp = pprint.PrettyPrinter(width=100, compact=True)
     # pp.pprint(list(artist_collection.find()))
     # pp.pprint(find_cheapest(netology_db))
-    pp.pprint(find_by_name('Enter', netology_db))
+    pp.pprint(find_by_name('Ария', netology_db))
 
