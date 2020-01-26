@@ -1,6 +1,6 @@
 import csv
 import re
-from pymongo import MongoClient, ASCENDING
+from pymongo import MongoClient
 import pprint
 
 client = MongoClient("mongodb://localhost:27017/")
