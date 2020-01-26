@@ -9,7 +9,6 @@ with open('phonebook_raw.csv', 'rt', encoding='utf8') as file:
     headers = contacts_list[0]
     contacts_list = contacts_list[1:]
 
-
 def work_with_name_and_tel(contacts_list):
     my_contact_list = []
     for contact in contacts_list:
