@@ -13,8 +13,9 @@ def read_data(csv_file, db):
     with open(csv_file, encoding='utf8') as csvfile:
         reader = csv.DictReader(csvfile, delimiter=',')
         for row in reader:
+            row['Цена'] = int(row['Цена'])
             db.insert_one(row)
-    # return reader
+    return reader
 
 
 def find_cheapest(db):
@@ -31,19 +32,25 @@ def find_by_name(name, db):
         3)регулярное выражение ищет изначальный запрос по ключам
         4)находит подходящие и выдает мне
         5)использую это выражение для плиска по БД'''
-    find_in_db = list(db.artist.find({'Исполнитель': name}).sort('Цена'))
+    find_in_db = list(db.artist.find({'Исполнитель': name},
+                                     {"_id": 0,
+                                      'Исполнитель': 1,
+                                      'Цена': 1,
+                                      'Место': 1,
+                                      'Дата': 1}).sort('Цена'))
     find_names = list(db.artist.find({}, {"_id": 0, 'Исполнитель': 1}))
     for dict in find_names:
         for key, value in dict.items():
             my_list.append(value)
+    print(my_list)
     return find_in_db
 
 
 if __name__ == '__main__':
     read_data('artists.csv', netology_db['artist'])
     pp = pprint.PrettyPrinter(width=100, compact=True)
-    # pp.pprint(list(artist_collection.find()))
     # pp.pprint(find_cheapest(netology_db))
     pp.pprint(find_by_name('Ария', netology_db))
-    # print(list(read_data('artists.csv', netology_db['artist'])))
+
+
 
