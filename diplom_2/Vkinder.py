@@ -38,9 +38,11 @@ from diplom_2.my_requests import check_user, search_list_users, get_users_params
 import pprint
 
 
+token = '92b1998dbc5c585641036729b8b95b726b078143cdb772982146e5b2e2c205882f02c66e01c55cdd47229'
+
+
 if __name__ == '__main__':
-    token = '92b1998dbc5c585641036729b8b95b726b078143cdb772982146e5b2e2c205882f02c66e01c55cdd47229'
-    users_params = {}
+
     # while True:
     #     #     user_input = input('Введите ID профиля или его имя (0 - выход из программы): ')
     #     #     if user_input != '0':
@@ -48,13 +50,6 @@ if __name__ == '__main__':
     #     #             user_id = user_input
     #     #             flag = check_user(user_id, token)
 
-    # response_list_need_users = search_list_users(token)
-    # list_need_users = response_list_need_users.json()['response']['items']
-    # pprint.pprint(list_need_users)
-    response_get_users_params = get_users_params(10886452, token)
-    list_user_params = response_get_users_params.json()['response']
-    pprint.pprint(list_user_params[0]['bdate'])
-    my_years = ()
-    # d1 = datetime.strptime('23.7.1992', "%d.%m.%Y")
-    d2 = datetime.timedelta()
-    # print(d2 - d1).days
+    response_list_need_users = search_list_users(token)
+    list_need_users = response_list_need_users.json()['response']['items']
+    pprint.pprint(list_need_users)

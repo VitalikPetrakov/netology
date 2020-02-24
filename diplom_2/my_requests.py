@@ -1,5 +1,6 @@
 import requests
 import time
+from diplom_2.user_params import user_params
 
 
 class MyExcept(Exception):
@@ -51,11 +52,14 @@ def get_users_params(id_user, token):
 
 def search_list_users(token):
     params = get_params(token)
-    params['hometown'] = 'Москва'
-    params['sex'] = '1'
+    params['hometown'] = user_params()['hometown']
+    if user_params()['sex'] == '2':
+        params['sex'] = '1'
+    elif user_params()['sex'] == '1':
+        params['sex'] = '2'
     params['status'] = '6'
-    params['age_from'] = '24'
-    params['age_to'] = '30'
+    params['age_from'] = user_params()['years'] - 3
+    params['age_to'] = user_params()['years'] + 3
     params['has_photo'] = '1'
     params['count'] = 1000
     params['fields'] = ['books, can_see_audio, city, games, movies, music, sex, bdate']
