@@ -29,8 +29,8 @@ class NameIter:
         if self.idx==self.n:
             self.file_to_write.close()
             raise StopIteration
-        return item                        
-        
+        return item
+
         
    """  
         if self.n == 0:
