@@ -1,10 +1,7 @@
-# from diplom_2.my_requests import get_users_params
 import diplom_2.my_requests
 import datetime
 from pprint import pprint
 
-
-# from diplom_2.Vkinder import token
 
 
 def user_params(token):
