@@ -16,7 +16,10 @@ def get_params(token):
     return params
 
 
-def check_user(user_id, user_input, token):
+"""Проверка что страница пользователя открыта"""
+
+
+def check_user(user_id, token):
     try:
         response = get_request_for_get_list_of_id_groups(user_id, token)
         my_response = response.json()
@@ -31,6 +34,28 @@ def check_user(user_id, user_input, token):
     return flag
 
 
+"Проверка того что введенный адишник принадлежит заданому зарание пользователю"
+
+
+def check_id_and_name_equal(input_for_test, user_id, token):
+    params = get_params(token)
+    split_input = input_for_test.split()
+    print(split_input)
+    params['user_ids'] = user_id
+    response = requests.get(
+        'https://api.vk.com/method/users.get',
+        params=params
+    )
+    if split_input[0] in response.json()['response'][0]['first_name'] + '' \
+            + response.json()['response'][0]['last_name']:
+        if split_input[1] in response.json()['response'][0]['first_name'] + '' \
+                + response.json()['response'][0]['last_name']:
+            return True
+
+
+"Нахождение ID пользователя по его никнейму"
+
+
 def get_request_for_get_user_id(user_input, token):
     params = get_params(token)
     params['user_ids'] = user_input
@@ -41,16 +66,20 @@ def get_request_for_get_user_id(user_input, token):
     return response
 
 
+"Нахождение ID по полному имени пользователю"
+
+
 def get_id_from_name(user_input, token):
     params = get_params(token)
     params['q'] = user_input
+    input_for_test = user_input
     response = requests.get(
         'https://api.vk.com/method/users.search',
         params=params
     )
     pprint(response.json()['response'])
     if len(response.json()['response']) == 1:
-        return response.json()['response'][0]['id']
+        return response.json()['response'][0]['id'], input_for_test
     else:
         print('Найдено слишком много пользователей, для уточнения ответье на несколько вопросов')
         params['hometown'] = input('Город проживания (На русском языке): ')
@@ -63,13 +92,16 @@ def get_id_from_name(user_input, token):
         )
         pprint(response.json()['response'])
         if len(response.json()['response']) == 1:
-            return response.json()['response'][0]['id']
+            return response.json()['response'][0]['id'], input_for_test
         elif len(response.json()['response']) == 1:
             print('Такого пользователя нет или ошибка ввода параметров')
         else:
             print('Все еще много вариантов....')
             user_id = input('введите его ID: ')
-            return user_id
+            return user_id, input_for_test
+
+
+"Получение параметров начального пользователя для дальнейшей работы"
 
 
 def get_users_params(id_user, token):
@@ -81,6 +113,9 @@ def get_users_params(id_user, token):
         params=params
     )
     return response
+
+
+"Происк целей по заданым параметрам"
 
 
 def search_list_users(token):
@@ -105,6 +140,9 @@ def search_list_users(token):
     return response
 
 
+"Обработка запроса на получение ID на правильность ввода"
+
+
 def get_user_id(user_input, token):
     try:
         response = get_request_for_get_user_id(user_input, token)
@@ -118,6 +156,9 @@ def get_user_id(user_input, token):
     return user_id
 
 
+"Запрос на получения списка групп"
+
+
 def get_request_for_get_list_of_id_groups(id_user, token):
     params = get_params(token)
     params['user_id'] = id_user
@@ -129,6 +170,9 @@ def get_request_for_get_list_of_id_groups(id_user, token):
         params=params
     )
     return response
+
+
+"Обработка запроса на получение списка групп"
 
 
 def get_list_of_id_groups(id_user, token):

@@ -35,24 +35,25 @@ JSON-файл с 10 объектами, где у каждого объекта 
 import diplom_2.database
 import datetime
 from diplom_2.my_requests import check_user, search_list_users, get_users_params, get_user_id, \
-    get_request_for_get_user_id, get_id_from_name
-import pprint
+    get_request_for_get_user_id, get_id_from_name, check_id_and_name_equal
+from pprint import pprint
 
 
-token = '92b1998dbc5c585641036729b8b95b726b078143cdb772982146e5b2e2c205882f02c66e01c55cdd47229'
+token = '9536a934fa0dbfdeaed31db8a021e1bc8848c737fe945292f68cf7da903e8f65fa7010e2d4b80bb30e993'
 
 
 if __name__ == '__main__':
-
-    # while True:
-    #     #     user_input = input('Введите ID профиля или его имя (0 - выход из программы): ')
-    #     #     if user_input != '0':
-    #     #         if user_input.isdigit():
-    #     #             user_id = user_input
-    #     #             flag = check_user(user_id, token)
+    while True:
+        user_input = input('Введите ID профиля или его имя (0 - выход из программы): ')
+        if user_input != '0':
+            if user_input.isdigit():
+                user_id = user_input
+                flag = check_user(user_id, token)
 
     # response_list_need_users = search_list_users(token)
     # list_need_users = response_list_need_users.json()['response']['items']
     # pprint.pprint(list_need_users)
 
-    check_user(get_id_from_name('Иван Иванов', token), 'Иван Иванов', token)
+    # check_user(get_id_from_name('Иван Иванов', token), 'Иван Иванов', token)
+    # pprint(get_request_for_get_user_id('1', token).json())
+    # check_id_and_name_equal('Дуров Павел', 1, token)
