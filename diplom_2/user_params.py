@@ -3,7 +3,6 @@ import datetime
 from pprint import pprint
 
 
-
 def user_params(token):
     users_params = {}
     response_get_users_params = diplom_2.my_requests.get_users_params(10886452, token)
