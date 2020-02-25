@@ -1,6 +1,7 @@
 import requests
 import time
 from diplom_2.user_params import user_params
+from pprint import pprint
 
 
 class MyExcept(Exception):
@@ -51,16 +52,17 @@ def get_users_params(id_user, token):
 
 
 def search_list_users(token):
+    used_user_params = user_params(token)
     params = get_params(token)
-    params['hometown'] = user_params()['hometown']
-    if user_params()['sex'] == '2':
+    params['city'] = used_user_params['city']
+    if used_user_params['sex'] == 2:
         params['sex'] = '1'
-    elif user_params()['sex'] == '1':
+    elif used_user_params['sex'] == 1:
         params['sex'] = '2'
     params['status'] = '6'
-    params['age_from'] = user_params()['years'] - 3
-    params['age_to'] = user_params()['years'] + 3
-    params['has_photo'] = '1'
+    params['age_from'] = used_user_params['years'] - 3
+    params['age_to'] = used_user_params['years'] + 3
+    params['has_photo'] = 1
     params['count'] = 1000
     params['fields'] = ['books, can_see_audio, city, games, movies, music, sex, bdate']
     # params['group_id'] = '1'
