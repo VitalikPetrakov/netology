@@ -16,7 +16,7 @@ def get_params(token):
     return params
 
 
-def check_user(user_id, token):
+def check_user(user_id, user_input, token):
     try:
         response = get_request_for_get_list_of_id_groups(user_id, token)
         my_response = response.json()
@@ -24,6 +24,7 @@ def check_user(user_id, token):
             if my_response.get('error').get('error_code') == 18:
                 raise MyExcept
         flag = 0
+        print('Пользователь найден')
     except MyExcept:
         flag = 1
         print('Страница удалена или заблокирована\n')
@@ -38,6 +39,37 @@ def get_request_for_get_user_id(user_input, token):
         params=params
     )
     return response
+
+
+def get_id_from_name(user_input, token):
+    params = get_params(token)
+    params['q'] = user_input
+    response = requests.get(
+        'https://api.vk.com/method/users.search',
+        params=params
+    )
+    pprint(response.json()['response'])
+    if len(response.json()['response']) == 1:
+        return response.json()['response'][0]['id']
+    else:
+        print('Найдено слишком много пользователей, для уточнения ответье на несколько вопросов')
+        params['hometown'] = input('Город проживания (На русском языке): ')
+        params['birth_year'] = input('День рождения (1-31): ')
+        params['birth_year'] = input('Месяц рождения: ')
+        params['birth_year'] = input('Год рождения: ')
+        response = requests.get(
+            'https://api.vk.com/method/users.search',
+            params=params
+        )
+        pprint(response.json()['response'])
+        if len(response.json()['response']) == 1:
+            return response.json()['response'][0]['id']
+        elif len(response.json()['response']) == 1:
+            print('Такого пользователя нет или ошибка ввода параметров')
+        else:
+            print('Все еще много вариантов....')
+            user_id = input('введите его ID: ')
+            return user_id
 
 
 def get_users_params(id_user, token):

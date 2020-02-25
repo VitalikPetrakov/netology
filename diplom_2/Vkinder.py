@@ -34,7 +34,8 @@ JSON-файл с 10 объектами, где у каждого объекта 
 Не запрещается использовать внешние библиотеки для vk.'''
 import diplom_2.database
 import datetime
-from diplom_2.my_requests import check_user, search_list_users, get_users_params
+from diplom_2.my_requests import check_user, search_list_users, get_users_params, get_user_id, \
+    get_request_for_get_user_id, get_id_from_name
 import pprint
 
 
@@ -50,6 +51,8 @@ if __name__ == '__main__':
     #     #             user_id = user_input
     #     #             flag = check_user(user_id, token)
 
-    response_list_need_users = search_list_users(token)
-    list_need_users = response_list_need_users.json()['response']['items']
-    pprint.pprint(list_need_users)
+    # response_list_need_users = search_list_users(token)
+    # list_need_users = response_list_need_users.json()['response']['items']
+    # pprint.pprint(list_need_users)
+
+    check_user(get_id_from_name('Иван Иванов', token), 'Иван Иванов', token)
