@@ -90,12 +90,10 @@ def get_id_from_name(user_input, token):
             'https://api.vk.com/method/users.search',
             params=params
         )
-        pprint(response.json()['response'])
         if len(response.json()['response']) == 1:
             return response.json()['response'][0]['id'], input_for_test
-        elif len(response.json()['response']) != 1:
-            print('Такого пользователя нет или ошибка ввода параметров')
         else:
+            print('Такого пользователя нет или ошибка ввода параметров')
             print('Все еще много вариантов....')
             user_id = input('введите его ID: ')
             return user_id, input_for_test
