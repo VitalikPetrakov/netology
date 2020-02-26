@@ -93,7 +93,7 @@ def get_id_from_name(user_input, token):
         pprint(response.json()['response'])
         if len(response.json()['response']) == 1:
             return response.json()['response'][0]['id'], input_for_test
-        elif len(response.json()['response']) == 1:
+        elif len(response.json()['response']) != 1:
             print('Такого пользователя нет или ошибка ввода параметров')
         else:
             print('Все еще много вариантов....')
